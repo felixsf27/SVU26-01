@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danke, Frau Smok!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #FFF9F0;
+            color: #2d2d2d;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%);
+            padding: 90px 20px 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-deco {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 9vw, 5.5rem);
+            font-weight: 900;
+            color: white;
+            text-shadow: 3px 4px 0px rgba(0,0,0,0.12);
+            line-height: 1.1;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+            animation: heroIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.35rem);
+            color: rgba(255,255,255,0.92);
+            font-weight: 600;
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+            animation: heroIn 0.7s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            margin-top: 28px;
+            background: rgba(255,255,255,0.25);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 100px;
+            padding: 8px 22px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+            position: relative;
+            z-index: 1;
+            animation: heroIn 0.7s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes heroIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== SHARED ===== */
+        .section-inner {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 70px 24px;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 4vw, 2.1rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 36px;
+            color: #FF6B6B;
+        }
+
+        /* ===== NACHRICHTEN ===== */
+        .messages-section { background: #FFF9F0; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 680px) {
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 22px 24px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card-emoji { font-size: 2.4rem; line-height: 1; }
+
+        .card-text {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: #555;
+            font-style: italic;
+            flex: 1;
+        }
+
+        .card-name {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #FF6B6B;
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== VIDEO ===== */
+        .video-section {
+            background-color: #ffffff;
+            background-image:
+                linear-gradient(rgba(100, 149, 237, 0.18) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 149, 237, 0.18) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .video-section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 70px 24px;
+        }
+
+        .video-layout {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .video-side-deco {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            font-size: 4rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        @media (max-width: 860px) {
+            .video-side-deco { display: none; }
+        }
+
+        .deco-popper  { opacity: 0.7; animation: decoPop     4s   ease-in-out infinite; }
+        .deco-party   { opacity: 0.65; animation: decoSpin   10s  linear     infinite; }
+        .deco-sparkle { opacity: 0.6;  animation: decoFade   1.8s ease-in-out infinite; }
+        .deco-star    { opacity: 0.7;  animation: decoTwinkle 2.2s ease-in-out infinite; }
+        .deco-balloon { opacity: 0.7;  animation: decoFloat  3s   ease-in-out infinite; }
+        .deco-bow     { opacity: 0.65; animation: decoSway   3.5s ease-in-out infinite; }
+
+        @keyframes decoFloat {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-14px); }
+        }
+        @keyframes decoTwinkle {
+            0%, 100% { transform: scale(1);    filter: brightness(1); }
+            50%       { transform: scale(1.28); filter: brightness(1.5); }
+        }
+        @keyframes decoFade {
+            0%, 100% { opacity: 0.3; }
+            50%       { opacity: 0.95; }
+        }
+        @keyframes decoPop {
+            0%, 78%, 100% { transform: rotate(0deg) scale(1); }
+            85%            { transform: rotate(-20deg) scale(1.25); }
+            93%            { transform: rotate(12deg) scale(1.12); }
+        }
+        @keyframes decoSpin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+        @keyframes decoSway {
+            0%, 100% { transform: rotate(-11deg); }
+            50%       { transform: rotate(11deg); }
+        }
+
+        .video-frame {
+            flex: 1;
+            min-width: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background: #f3f3f3;
+            border: 3px dashed #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+
+        .video-placeholder { text-align: center; padding: 40px 20px; }
+        .video-placeholder .placeholder-icon { font-size: 4rem; margin-bottom: 16px; display: block; }
+        .video-placeholder p { font-size: 1.15rem; font-weight: 700; color: #bbb; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #2d2d2d;
+            color: #888;
+            text-align: center;
+            padding: 36px 20px;
+            font-size: 0.95rem;
+        }
+        footer .heart { color: #FF6B6B; }
+
+        /* ===== CONFETTI ===== */
+        .confetti-piece {
+            position: fixed;
+            top: -20px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confetti-fall linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+            80%  { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(600deg); opacity: 0; }
+        }
+
+        /* ===== LOGIN ===== */
+        #login-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            transition: opacity 0.5s ease;
+        }
+
+        #login-overlay.fade-out { opacity: 0; pointer-events: none; }
+
+        #login-box {
+            background: white;
+            border-radius: 24px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 480px) { #login-box { padding: 32px 20px; } }
+
+        #login-box .lock { font-size: 3rem; margin-bottom: 16px; }
+        #login-box h2 { font-size: 1.6rem; font-weight: 900; color: #2d2d2d; margin-bottom: 8px; }
+        #login-box p { color: #999; font-size: 0.95rem; margin-bottom: 28px; }
+
+        .login-field {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .login-field:focus { border-color: #FF6B6B; }
+
+        .password-wrap { position: relative; margin-bottom: 14px; }
+        .password-wrap .login-field { margin-bottom: 0; padding-right: 50px; }
+
+        .toggle-pw {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+            line-height: 1;
+            color: #bbb;
+            transition: color 0.2s;
+        }
+        .toggle-pw:hover { color: #FF6B6B; }
+
+        #login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #FF6B6B, #FFD93D);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        #login-btn:hover  { opacity: 0.9; }
+        #login-btn:active { transform: scale(0.98); }
+
+        #login-error { margin-top: 14px; color: #FF6B6B; font-weight: 700; font-size: 0.9rem; min-height: 20px; }
+
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20%     { transform: translateX(-8px); }
+            40%     { transform: translateX(8px); }
+            60%     { transform: translateX(-5px); }
+            80%     { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <div id="login-overlay">
+        <div id="login-box">
+            <div class="lock">🔒</div>
+            <h2>Passwort eingeben</h2>
+            <p>Diese Seite ist nur für eingeladene Gäste.</p>
+            <input class="login-field" id="login-user" type="text" placeholder="Benutzername" autocomplete="username" />
+            <div class="password-wrap">
+                <input class="login-field" id="login-pass" type="password" placeholder="Passwort" autocomplete="current-password" />
+                <button class="toggle-pw" type="button" id="toggle-pw-btn" tabindex="-1" aria-label="Passwort anzeigen">👁️</button>
+            </div>
+            <button id="login-btn" type="button" onclick="checkLogin()">Weiter →</button>
+            <div id="login-error"></div>
+        </div>
+    </div>
+
+    <!-- HERO — 6 Hintergrund-Emojis verteilt -->
+    <div class="hero">
+        <span class="hero-deco" style="font-size:200px;opacity:0.08;top:-20px;left:-20px;">🎉</span>
+        <span class="hero-deco" style="font-size:180px;opacity:0.07;top:-10px;right:4%;">🎈</span>
+        <span class="hero-deco" style="font-size:130px;opacity:0.07;top:50%;left:3%;transform:translateY(-50%);">✨</span>
+        <span class="hero-deco" style="font-size:140px;opacity:0.07;top:50%;right:3%;transform:translateY(-50%);">🌟</span>
+        <span class="hero-deco" style="font-size:160px;opacity:0.07;bottom:-20px;left:8%;">🎀</span>
+        <span class="hero-deco" style="font-size:220px;opacity:0.08;bottom:-40px;right:-20px;">🎊</span>
+
+        <h1>Danke, Frau Smok!</h1>
+        <p class="subtitle">Vielen Dank für die vielen Lacher und dafür, dass der Unterricht nie langweilig war.</p>
+        <span class="badge">SVU-Kurs 26/01 · Leipzig</span>
+    </div>
+
+    <!-- NACHRICHTEN VOM KURS -->
+    <div class="messages-section">
+        <div class="section-inner">
+            <h2 class="section-title">Stimmen aus dem Kurs</h2>
+            <div class="cards-grid">
+
+                <!-- Karte 1 — Text und Name hier anpassen -->
+                <div class="card">
+                    <span class="card-emoji">🌟</span>
+                    <p class="card-text">„Der Unterricht hat immer Spaß gemacht — danke für jede einzelne Stunde!"</p>
+                    <span class="card-name">— [Vorname]</span>
+                </div>
+
+                <!-- Karte 2 — Text und Name hier anpassen -->
+                <div class="card">
+                    <span class="card-emoji">💛</span>
+                    <p class="card-text">„Man hat gemerkt, dass Sie mit echtem Herzblut dabei waren. Das hat uns motiviert."</p>
+                    <span class="card-name">— [Vorname]</span>
+                </div>
+
+                <!-- Karte 3 — Text und Name hier anpassen -->
+                <div class="card">
+                    <span class="card-emoji">🙏</span>
+                    <p class="card-text">„Danke für Ihre Geduld, Ihren Humor und dafür, dass Sie nie aufgegeben haben."</p>
+                    <span class="card-name">— [Vorname]</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="video-section">
+        <div class="video-section-inner">
+            <h2 class="section-title">Unser Video für Sie</h2>
+            <div class="video-layout">
+
+                <div class="video-side-deco">
+                    <span class="deco-popper">🎉</span>
+                    <span class="deco-party">🎊</span>
+                    <span class="deco-sparkle" style="animation-delay:0.6s;">✨</span>
+                </div>
+
+                <div class="video-frame" id="video-frame">
+                    <!-- wird per JS befüllt -->
+                </div>
+
+                <div class="video-side-deco">
+                    <span class="deco-star">🌟</span>
+                    <span class="deco-balloon" style="animation-delay:0.4s;">🎈</span>
+                    <span class="deco-bow" style="animation-delay:0.9s;">🎀</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Gemacht mit <span class="heart">&#9829;</span> von Ihrem SVU-Kurs 26/01 &middot; Leipzig 2026</p>
+    </footer>
+
+    <script>
+        // ZUGANGSDATEN — wird durch Netlify-Auth ersetzt
+        const USERS = [
+            { name: "smok", password: "svukurs2026" },
+            { name: "kurs", password: "frausmok"   },
+        ];
+
+        // YOUTUBE-ID — hier eintragen sobald das Video fertig ist, z.B.: 'dQw4w9WgXcQ'
+        const YOUTUBE_ID = '';
+
+        const frame = document.getElementById('video-frame');
+        if (YOUTUBE_ID) {
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${YOUTUBE_ID}`;
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+            frame.appendChild(iframe);
+        } else {
+            frame.innerHTML = `<div class="video-placeholder"><span class="placeholder-icon">🎬</span><p>Das Video kommt bald!</p></div>`;
+        }
+
+        document.getElementById('toggle-pw-btn').addEventListener('click', () => {
+            const field = document.getElementById('login-pass');
+            const btn   = document.getElementById('toggle-pw-btn');
+            field.type  = field.type === 'password' ? 'text' : 'password';
+            btn.textContent = field.type === 'password' ? '👁️' : '🙈';
+        });
+
+        if (sessionStorage.getItem('auth') === 'ok') {
+            document.getElementById('login-overlay').style.display = 'none';
+            fireConfetti();
+        }
+
+        function checkLogin() {
+            const user  = document.getElementById('login-user').value.trim().toLowerCase();
+            const pass  = document.getElementById('login-pass').value;
+            const match = USERS.find(u => u.name === user && u.password === pass);
+
+            if (match) {
+                sessionStorage.setItem('auth', 'ok');
+                const overlay = document.getElementById('login-overlay');
+                overlay.classList.add('fade-out');
+                fireConfetti();
+                setTimeout(() => overlay.style.display = 'none', 500);
+            } else {
+                document.getElementById('login-error').textContent = 'Benutzername oder Passwort falsch.';
+                document.getElementById('login-pass').value = '';
+                document.getElementById('login-pass').focus();
+                const box = document.getElementById('login-box');
+                box.style.animation = 'none';
+                requestAnimationFrame(() => { box.style.animation = 'shake 0.4s ease'; });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ['login-user', 'login-pass'].forEach(id => {
+                document.getElementById(id).addEventListener('keydown', e => {
+                    if (e.key === 'Enter') checkLogin();
+                });
+            });
+        });
+    </script>
+
+    <script>
+        const confettiColors = ['#FF6B6B', '#FFD93D', '#4ECDC4', '#A29BFE', '#55EFC4', '#FD79A8', '#FDCB6E'];
+
+        function spawnConfetti() {
+            const el = document.createElement('div');
+            el.className = 'confetti-piece';
+            const size = Math.random() * 9 + 6;
+            el.style.width        = size + 'px';
+            el.style.height       = size + 'px';
+            el.style.left         = Math.random() * 100 + 'vw';
+            el.style.background   = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            el.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+            const duration = Math.random() * 2.5 + 2;
+            el.style.animationDuration = duration + 's';
+            el.style.animationDelay    = (Math.random() * 1.5) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), (duration + 1.5) * 1000);
+        }
+
+        function fireConfetti() {
+            for (let i = 0; i < 80; i++) setTimeout(spawnConfetti, i * 40);
+            const drizzle = setInterval(spawnConfetti, 250);
+            setTimeout(() => clearInterval(drizzle), 8000);
+            // kleine Nachbursts alle 14s, nachdem der Hauptregen aufgehört hat
+            setTimeout(() => {
+                setInterval(() => {
+                    for (let i = 0; i < 8; i++) setTimeout(spawnConfetti, i * 70);
+                }, 14000);
+            }, 9000);
+        }
+    </script>
+
+</body>
+</html>
