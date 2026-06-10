@@ -87,7 +87,11 @@
 
         /* ===== VIDEO ===== */
         .video-section {
-            background: white;
+            background-color: #ffffff;
+            background-image:
+                linear-gradient(rgba(100, 149, 237, 0.18) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 149, 237, 0.18) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
 
         .video-frame {
@@ -109,54 +113,6 @@
             background: #000;
         }
 
-        /* ===== MESSAGES ===== */
-        .messages-section {
-            background: #FFF9F0;
-        }
-
-        .messages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 22px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 26px 24px 20px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
-            border-top: 5px solid;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: default;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 32px rgba(0,0,0,0.12);
-        }
-
-        .card:nth-child(6n+1) { border-color: #FF6B6B; }
-        .card:nth-child(6n+2) { border-color: #4ECDC4; }
-        .card:nth-child(6n+3) { border-color: #FFD93D; }
-        .card:nth-child(6n+4) { border-color: #A29BFE; }
-        .card:nth-child(6n+5) { border-color: #55EFC4; }
-        .card:nth-child(6n+6) { border-color: #FD79A8; }
-
-        .card-text {
-            font-size: 1rem;
-            line-height: 1.75;
-            color: #555;
-            font-style: italic;
-            margin-bottom: 16px;
-        }
-
-        .card-author {
-            font-weight: 800;
-            font-size: 0.85rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-        }
 
         /* ===== FOOTER ===== */
         footer {
@@ -194,7 +150,7 @@
         <span class="hero-bg-emoji left">🎉</span>
         <span class="hero-bg-emoji right">🎊</span>
         <h1>Danke, Frau Smok!</h1>
-        <p class="subtitle">Sie haben uns mehr beigebracht als nur den Stoff. Das vergessen wir nicht.</p>
+        <p class="subtitle">Vielen Dank fur die vielen Lacher und dafur, dass der Unterricht nie langweilig war.</p>
         <span class="badge">SVU-Kurs Leipzig</span>
     </div>
 
@@ -210,56 +166,10 @@
         </div>
     </div>
 
-    <!-- MESSAGES -->
-    <div class="messages-section">
-        <div class="section-inner">
-            <h2 class="section-title">Was wir Ihnen sagen wollen</h2>
-            <div class="messages-grid">
-
-                <!-- ============================================================
-                     NACHRICHTEN ANPASSEN:
-                     Einfach den Text zwischen den Anfuhrungszeichen ersetzen
-                     und den Namen hinter dem Bindestrich andern.
-                     Zum Hinzufugen: Diese card-Block einfach kopieren und einfugen.
-                     ============================================================ -->
-
-                <div class="card">
-                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 1 eintragen."</p>
-                    <span class="card-author">Vorname</span>
-                </div>
-
-                <div class="card">
-                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 2 eintragen."</p>
-                    <span class="card-author">Vorname</span>
-                </div>
-
-                <div class="card">
-                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 3 eintragen."</p>
-                    <span class="card-author">Vorname</span>
-                </div>
-
-                <div class="card">
-                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 4 eintragen."</p>
-                    <span class="card-author">Vorname</span>
-                </div>
-
-                <div class="card">
-                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 5 eintragen."</p>
-                    <span class="card-author">Vorname</span>
-                </div>
-
-                <div class="card">
-                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 6 eintragen."</p>
-                    <span class="card-author">Vorname</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
     <!-- FOOTER -->
     <footer>
-        <p>Gemacht mit <span class="heart">&#9829;</span> von Ihrem SVU-Kurs &middot; Leipzig 2025/2026</p>
+        <p>Gemacht mit <span class="heart">&#9829;</span> von Ihrem SVU-Kurs &middot; Leipzig 2026</p>
     </footer>
 
     <!-- CONFETTI ON LOAD -->
