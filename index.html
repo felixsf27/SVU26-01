@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danke, Frau Smok!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #FFF9F0;
+            color: #2d2d2d;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%);
+            padding: 90px 20px 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg-emoji {
+            position: absolute;
+            font-size: 220px;
+            opacity: 0.08;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .hero-bg-emoji.left  { top: -30px; left: -30px; }
+        .hero-bg-emoji.right { bottom: -40px; right: -30px; }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 9vw, 5.5rem);
+            font-weight: 900;
+            color: white;
+            text-shadow: 3px 4px 0px rgba(0,0,0,0.12);
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.35rem);
+            color: rgba(255,255,255,0.92);
+            font-weight: 600;
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            margin-top: 28px;
+            background: rgba(255,255,255,0.25);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 100px;
+            padding: 8px 22px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ===== SHARED SECTION ===== */
+        .section-inner {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 70px 24px;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 4vw, 2.1rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 36px;
+            color: #FF6B6B;
+        }
+
+        /* ===== VIDEO ===== */
+        .video-section {
+            background: white;
+        }
+
+        .video-frame {
+            border-radius: 18px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background: #f3f3f3;
+            border: 3px dashed #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .video-placeholder {
+            text-align: center;
+            color: #bbb;
+            padding: 40px;
+        }
+
+        .video-placeholder .icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+        }
+
+        .video-placeholder p {
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        /* ===== MESSAGES ===== */
+        .messages-section {
+            background: #FFF9F0;
+        }
+
+        .messages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 26px 24px 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+            border-top: 5px solid;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: default;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 32px rgba(0,0,0,0.12);
+        }
+
+        .card:nth-child(6n+1) { border-color: #FF6B6B; }
+        .card:nth-child(6n+2) { border-color: #4ECDC4; }
+        .card:nth-child(6n+3) { border-color: #FFD93D; }
+        .card:nth-child(6n+4) { border-color: #A29BFE; }
+        .card:nth-child(6n+5) { border-color: #55EFC4; }
+        .card:nth-child(6n+6) { border-color: #FD79A8; }
+
+        .card-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        .card-author {
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #2d2d2d;
+            color: #888;
+            text-align: center;
+            padding: 36px 20px;
+            font-size: 0.95rem;
+        }
+
+        footer .heart {
+            color: #FF6B6B;
+        }
+
+        /* ===== CONFETTI ===== */
+        .confetti-piece {
+            position: fixed;
+            top: -20px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: confetti-fall linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0%   { transform: translateY(0) rotate(0deg);    opacity: 1; }
+            80%  { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(600deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="hero">
+        <span class="hero-bg-emoji left">🎉</span>
+        <span class="hero-bg-emoji right">🎊</span>
+        <h1>Danke, Frau Smok!</h1>
+        <p class="subtitle">Sie haben uns mehr beigebracht als nur den Stoff. Das vergessen wir nicht.</p>
+        <span class="badge">SVU-Kurs Leipzig</span>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="video-section">
+        <div class="section-inner">
+            <h2 class="section-title">Unser Video fur Sie</h2>
+            <div class="video-frame">
+
+                <!-- ============================================================
+                     VIDEO EINFUGEN:
+                     1. Das Video auf YouTube hochladen
+                     2. Den Link offnen, z.B.: https://www.youtube.com/watch?v=abc123
+                     3. Die ID hinter "?v=" kopieren (hier: abc123)
+                     4. Den Platzhalter unten ersetzen durch:
+                        <iframe src="https://www.youtube.com/embed/abc123" allowfullscreen></iframe>
+                     ============================================================ -->
+
+                <div class="video-placeholder">
+                    <div class="icon">🎬</div>
+                    <p>Das Video erscheint hier,<br>sobald es hochgeladen ist.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="messages-section">
+        <div class="section-inner">
+            <h2 class="section-title">Was wir Ihnen sagen wollen</h2>
+            <div class="messages-grid">
+
+                <!-- ============================================================
+                     NACHRICHTEN ANPASSEN:
+                     Einfach den Text zwischen den Anfuhrungszeichen ersetzen
+                     und den Namen hinter dem Bindestrich andern.
+                     Zum Hinzufugen: Diese card-Block einfach kopieren und einfugen.
+                     ============================================================ -->
+
+                <div class="card">
+                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 1 eintragen."</p>
+                    <span class="card-author">Vorname</span>
+                </div>
+
+                <div class="card">
+                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 2 eintragen."</p>
+                    <span class="card-author">Vorname</span>
+                </div>
+
+                <div class="card">
+                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 3 eintragen."</p>
+                    <span class="card-author">Vorname</span>
+                </div>
+
+                <div class="card">
+                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 4 eintragen."</p>
+                    <span class="card-author">Vorname</span>
+                </div>
+
+                <div class="card">
+                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 5 eintragen."</p>
+                    <span class="card-author">Vorname</span>
+                </div>
+
+                <div class="card">
+                    <p class="card-text">"Hier die Nachricht von Kursteilnehmer 6 eintragen."</p>
+                    <span class="card-author">Vorname</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Gemacht mit <span class="heart">&#9829;</span> von Ihrem SVU-Kurs &middot; Leipzig 2025/2026</p>
+    </footer>
+
+    <!-- CONFETTI ON LOAD -->
+    <script>
+        const confettiColors = ['#FF6B6B', '#FFD93D', '#4ECDC4', '#A29BFE', '#55EFC4', '#FD79A8', '#FDCB6E'];
+
+        function spawnConfetti() {
+            const el = document.createElement('div');
+            el.className = 'confetti-piece';
+
+            const size = Math.random() * 9 + 6;
+            el.style.width  = size + 'px';
+            el.style.height = size + 'px';
+            el.style.left   = Math.random() * 100 + 'vw';
+            el.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            el.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+
+            const duration = Math.random() * 2.5 + 2;
+            el.style.animationDuration = duration + 's';
+            el.style.animationDelay   = (Math.random() * 1.5) + 's';
+
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), (duration + 1.5) * 1000);
+        }
+
+        // Initial burst
+        for (let i = 0; i < 80; i++) {
+            setTimeout(spawnConfetti, i * 40);
+        }
+
+        // Light drizzle for a few seconds after
+        const drizzle = setInterval(spawnConfetti, 250);
+        setTimeout(() => clearInterval(drizzle), 8000);
+    </script>
+
+</body>
+</html>
