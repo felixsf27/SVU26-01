@@ -101,28 +101,12 @@
             justify-content: center;
         }
 
-        .video-frame iframe {
+        .video-frame video {
             width: 100%;
             height: 100%;
-            border: none;
             display: block;
-        }
-
-        .video-placeholder {
-            text-align: center;
-            color: #bbb;
-            padding: 40px;
-        }
-
-        .video-placeholder .icon {
-            font-size: 3.5rem;
-            margin-bottom: 12px;
-        }
-
-        .video-placeholder p {
-            font-size: 1.05rem;
-            font-weight: 600;
-            line-height: 1.6;
+            object-fit: contain;
+            background: #000;
         }
 
         /* ===== MESSAGES ===== */
@@ -219,21 +203,9 @@
         <div class="section-inner">
             <h2 class="section-title">Unser Video fur Sie</h2>
             <div class="video-frame">
-
-                <!-- ============================================================
-                     VIDEO EINFUGEN:
-                     1. Das Video auf YouTube hochladen
-                     2. Den Link offnen, z.B.: https://www.youtube.com/watch?v=abc123
-                     3. Die ID hinter "?v=" kopieren (hier: abc123)
-                     4. Den Platzhalter unten ersetzen durch:
-                        <iframe src="https://www.youtube.com/embed/abc123" allowfullscreen></iframe>
-                     ============================================================ -->
-
-                <div class="video-placeholder">
-                    <div class="icon">🎬</div>
-                    <p>Das Video erscheint hier,<br>sobald es hochgeladen ist.</p>
-                </div>
-
+                <video controls preload="metadata">
+                    <source src="video/video.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
     </div>
