@@ -457,11 +457,6 @@
             btn.textContent = field.type === 'password' ? '👁️' : '🙈';
         });
 
-        if (sessionStorage.getItem('auth') === 'ok') {
-            document.getElementById('login-overlay').style.display = 'none';
-            fireConfetti();
-        }
-
         function checkLogin() {
             const user  = document.getElementById('login-user').value.trim().toLowerCase();
             const pass  = document.getElementById('login-pass').value;
@@ -521,6 +516,11 @@
                     for (let i = 0; i < 8; i++) setTimeout(spawnConfetti, i * 70);
                 }, 14000);
             }, 9000);
+        }
+        // Auth-Check hier, nach der Definition von fireConfetti
+        if (sessionStorage.getItem('auth') === 'ok') {
+            document.getElementById('login-overlay').style.display = 'none';
+            fireConfetti();
         }
     </script>
 
