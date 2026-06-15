@@ -457,6 +457,14 @@
             btn.textContent = field.type === 'password' ? '👁️' : '🙈';
         });
 
+        function applyUserContent() {
+            const user = sessionStorage.getItem('user');
+            if (user === 'kurs') {
+                document.querySelector('.hero h1').textContent = 'SVU 26/01. Objektiv die beste Gruppe.';
+                document.querySelector('.hero .subtitle').textContent = 'Quellen: wir selbst. Methodik: einwandfrei.';
+            }
+        }
+
         function checkLogin() {
             const user  = document.getElementById('login-user').value.trim().toLowerCase();
             const pass  = document.getElementById('login-pass').value;
@@ -464,8 +472,10 @@
 
             if (match) {
                 sessionStorage.setItem('auth', 'ok');
+                sessionStorage.setItem('user', match.name);
                 const overlay = document.getElementById('login-overlay');
                 overlay.classList.add('fade-out');
+                applyUserContent();
                 fireConfetti();
                 setTimeout(() => overlay.style.display = 'none', 500);
             } else {
@@ -520,6 +530,7 @@
         // Auth-Check hier, nach der Definition von fireConfetti
         if (sessionStorage.getItem('auth') === 'ok') {
             document.getElementById('login-overlay').style.display = 'none';
+            applyUserContent();
             fireConfetti();
         }
     </script>
