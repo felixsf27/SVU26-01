@@ -530,9 +530,13 @@
         }
         // Auth-Check hier, nach der Definition von fireConfetti
         if (sessionStorage.getItem('auth') === 'ok') {
-            document.getElementById('login-overlay').style.display = 'none';
-            applyUserContent();
-            fireConfetti();
+            if (!sessionStorage.getItem('user')) {
+                sessionStorage.removeItem('auth');
+            } else {
+                document.getElementById('login-overlay').style.display = 'none';
+                applyUserContent();
+                fireConfetti();
+            }
         }
     </script>
 
