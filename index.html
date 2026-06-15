@@ -430,11 +430,7 @@
     </footer>
 
     <script>
-        // ZUGANGSDATEN — wird durch Netlify-Auth ersetzt
-        const USERS = [
-            { name: "smok", password: "svukurs2026" },
-            { name: "kurs", password: "frausmok"   },
-        ];
+        // Zugangsdaten werden serverseitig in Netlify geprüft
 
         // YOUTUBE-ID — hier eintragen sobald das Video fertig ist, z.B.: 'dQw4w9WgXcQ'
         const YOUTUBE_ID = '';
@@ -467,27 +463,44 @@
             }
         }
 
-        function checkLogin() {
-            const user  = document.getElementById('login-user').value.trim().toLowerCase();
-            const pass  = document.getElementById('login-pass').value;
-            const match = USERS.find(u => u.name === user && u.password === pass);
+        async function checkLogin() {
+            const user = document.getElementById('login-user').value.trim().toLowerCase();
+            const pass = document.getElementById('login-pass').value;
+            const btn  = document.getElementById('login-btn');
 
-            if (match) {
-                sessionStorage.setItem('auth', 'ok');
-                sessionStorage.setItem('user', match.name);
-                const overlay = document.getElementById('login-overlay');
-                overlay.classList.add('fade-out');
-                applyUserContent();
-                fireConfetti();
-                setTimeout(() => overlay.style.display = 'none', 500);
-            } else {
-                document.getElementById('login-error').textContent = 'Benutzername oder Passwort falsch.';
-                document.getElementById('login-pass').value = '';
-                document.getElementById('login-pass').focus();
-                const box = document.getElementById('login-box');
-                box.style.animation = 'none';
-                requestAnimationFrame(() => { box.style.animation = 'shake 0.4s ease'; });
+            btn.disabled = true;
+            btn.textContent = '...';
+
+            try {
+                const res  = await fetch('/.netlify/functions/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    sessionStorage.setItem('auth', 'ok');
+                    sessionStorage.setItem('user', data.user);
+                    const overlay = document.getElementById('login-overlay');
+                    overlay.classList.add('fade-out');
+                    applyUserContent();
+                    fireConfetti();
+                    setTimeout(() => overlay.style.display = 'none', 500);
+                } else {
+                    document.getElementById('login-error').textContent = 'Benutzername oder Passwort falsch.';
+                    document.getElementById('login-pass').value = '';
+                    document.getElementById('login-pass').focus();
+                    const box = document.getElementById('login-box');
+                    box.style.animation = 'none';
+                    requestAnimationFrame(() => { box.style.animation = 'shake 0.4s ease'; });
+                }
+            } catch {
+                document.getElementById('login-error').textContent = 'Verbindungsfehler. Bitte neu laden.';
             }
+
+            btn.disabled = false;
+            btn.textContent = 'Weiter →';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
