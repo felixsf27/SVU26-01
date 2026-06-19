@@ -93,17 +93,19 @@
 
         /* ===== NACHRICHTEN ===== */
         .messages-section {
-            background-color: #f5f5f0;
+            background-color: #ffffff;
             background-image:
-                linear-gradient(45deg, rgba(120,120,100,0.12) 1px, transparent 1px),
-                linear-gradient(-45deg, rgba(120,120,100,0.12) 1px, transparent 1px);
-            background-size: 28px 28px;
+                linear-gradient(rgba(100, 149, 237, 0.18) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 149, 237, 0.18) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-attachment: fixed;
         }
 
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
+            transition: opacity 0.35s ease;
         }
 
         @media (max-width: 680px) {
@@ -157,6 +159,7 @@
                 linear-gradient(rgba(100, 149, 237, 0.18) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(100, 149, 237, 0.18) 1px, transparent 1px);
             background-size: 24px 24px;
+            background-attachment: fixed;
         }
 
         .video-section-inner {
@@ -389,30 +392,7 @@
     <div class="messages-section">
         <div class="section-inner">
             <h2 class="section-title">Grüße vom Kurs</h2>
-            <div class="cards-grid">
-
-                <!-- Karte 1 — Text und Name hier anpassen -->
-                <div class="card">
-                    <span class="card-emoji">🌟</span>
-                    <p class="card-text">„Der Unterricht hat immer Spaß gemacht — danke für jede einzelne Stunde!"</p>
-                    <span class="card-name">— [Vorname]</span>
-                </div>
-
-                <!-- Karte 2 — Text und Name hier anpassen -->
-                <div class="card">
-                    <span class="card-emoji">💛</span>
-                    <p class="card-text">„Man hat gemerkt, dass Sie mit echtem Herzblut dabei waren. Das hat uns motiviert."</p>
-                    <span class="card-name">— [Vorname]</span>
-                </div>
-
-                <!-- Karte 3 — Text und Name hier anpassen -->
-                <div class="card">
-                    <span class="card-emoji">🙏</span>
-                    <p class="card-text">„Danke für Ihre Geduld, Ihren Humor und dafür, dass Sie nie aufgegeben haben."</p>
-                    <span class="card-name">— [Vorname]</span>
-                </div>
-
-            </div>
+            <div class="cards-grid" id="cards-grid"></div>
         </div>
     </div>
 
@@ -447,11 +427,58 @@
         <p>Gemacht mit <span class="heart">&#9829;</span> von Ihrem SVU-Kurs 26/01 &middot; Leipzig 2026</p>
     </footer>
 
+    <!-- KARTEN-ROTATION -->
+    <script>
+        const MESSAGES = [
+            { emoji: '🌟', text: '„Vielen Dank für Ihre Geduld mit uns. Ihr forscher, aber liebevoller Führungsstil hat mir sehr gefallen."', name: '— Line' },
+            { emoji: '🎉', text: '„Danke für die tolle Zeit, ohne Sie hätte ich das Praktikum niemals bekommen."', name: '— Rico' },
+            { emoji: '😂', text: '„Danke für das ganze Rumblödeln, das hat den Tag schneller vergehen lassen."', name: '— Felix' },
+            { emoji: '💛', text: '„Vielen Dank für Ihre ehrlichen Worte, Ihr Verständnis und auch den ein oder anderen Tritt in meinen Hintern."', name: '— Nico' },
+            { emoji: '🙏', text: '„[Nachricht 5]"', name: '— [Name 5]' },
+            { emoji: '🌈', text: '„[Nachricht 6]"', name: '— [Name 6]' },
+            { emoji: '🔥', text: '„[Nachricht 7]"', name: '— [Name 7]' },
+            { emoji: '💪', text: '„[Nachricht 8]"', name: '— [Name 8]' },
+            { emoji: '✨', text: '„[Nachricht 9]"', name: '— [Name 9]' },
+        ];
+
+        const CARDS_VISIBLE = 3;
+        const ROTATE_MS = 9000;
+        let currentIndex = 0;
+        let cardInterval = null;
+
+        function renderCards(startIndex) {
+            const grid = document.getElementById('cards-grid');
+            grid.style.opacity = '0';
+            setTimeout(() => {
+                grid.innerHTML = '';
+                for (let i = 0; i < CARDS_VISIBLE; i++) {
+                    const m = MESSAGES[(startIndex + i) % MESSAGES.length];
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <span class="card-emoji">${m.emoji}</span>
+                        <p class="card-text">${m.text}</p>
+                        <span class="card-name">${m.name}</span>`;
+                    grid.appendChild(card);
+                }
+                grid.style.opacity = '1';
+            }, 350);
+        }
+
+        function startCardRotation() {
+            if (cardInterval) return;
+            renderCards(currentIndex);
+            cardInterval = setInterval(() => {
+                currentIndex = (currentIndex + CARDS_VISIBLE) % MESSAGES.length;
+                renderCards(currentIndex);
+            }, ROTATE_MS);
+        }
+    </script>
+
     <script>
         // Zugangsdaten werden serverseitig in Netlify geprüft
 
-        // YOUTUBE-ID — hier eintragen sobald das Video fertig ist, z.B.: 'dQw4w9WgXcQ'
-        const YOUTUBE_ID = '';
+        const YOUTUBE_ID = 'xYle1B-EFms';
 
         const frame = document.getElementById('video-frame');
         if (YOUTUBE_ID) {
@@ -475,6 +502,7 @@
             const user = sessionStorage.getItem('user');
             if (user === 'smok') {
                 document.title = 'Danke, Frau Smok!';
+                startCardRotation();
             } else if (user === 'kurs') {
                 document.querySelector('.hero h1').textContent = 'SVU 26/01. Objektiv die beste Gruppe.';
                 document.querySelector('.hero .subtitle').textContent = 'Quellen: wir selbst. Methodik: einwandfrei.';
@@ -554,12 +582,6 @@
             for (let i = 0; i < 80; i++) setTimeout(spawnConfetti, i * 40);
             const drizzle = setInterval(spawnConfetti, 250);
             setTimeout(() => clearInterval(drizzle), 8000);
-            // kleine Nachbursts alle 14s, nachdem der Hauptregen aufgehört hat
-            setTimeout(() => {
-                setInterval(() => {
-                    for (let i = 0; i < 8; i++) setTimeout(spawnConfetti, i * 70);
-                }, 14000);
-            }, 9000);
         }
         // Auth-Check hier, nach der Definition von fireConfetti
         if (sessionStorage.getItem('auth') === 'ok') {
